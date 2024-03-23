@@ -11,10 +11,30 @@ async function start() {
   const welcomeMessage = `You just got off the bus from school, no one is home you have to get in the house by yourself
   through the garage, wash up, eat a snack and go relax in your room.`;
   let answer = await ask(welcomeMessage);
-  console.log('Now write your code to make this work!');
   process.exit();
-}
 
+  function playerCommands(command) {
+    switch (command) {
+      case 'enter':
+        console.log('');
+      case 'move':
+        console.log('');
+      case 'open':
+        console.log('');
+      case 'dropItem':
+        console.log('');
+      case 'grabItem':
+        console.log('');
+      case 'read':
+        console.log('');
+      default:
+        console.log(`sorry I don't understand ${command}`);
+
+      // let newInput = prompt('Enter the next move >\n');
+      // playCommands(newInput);
+    }
+  }
+}
 class room {
   constructor(description, items, exit) {
     (this.description = description),
@@ -23,42 +43,41 @@ class room {
       (this.exit = exit);
   }
 }
+console.log(constructor);
 
-let driveway = new room({
-  name: 'driveway',
-  description: 'it is what leads to your garage to get inside yor house',
-  items: 'code, code pad, and garage',
-});
+function roomDescription(currentRoom) {
+  switch (currentRoom) {
+    case 'driveway':
+      console.log(
+        'walking up the driveway to the garage there will be a code pad, you need to enter the 4 digit password to open the garage. The code is carved into the back of the rock that is in the flower bed on the side of the garage and in front of the house, pick up that rock and flip it over and enter that code.',
+      );
 
-let garage = new room({
-  name: 'garage',
-  description: 'get into the garage to go inside the basement',
-  items: 'door',
-});
+    case 'garage':
+      console.log(
+        'Now that you are in the garage, you want to get into the house. There are two doors one front of you and one to the right of you one of them leads to the basement in side the house and from there you will find the bathroom to wash up. The door on your right will open up the basement door.',
+      );
 
-let basement = new room({
-  name: 'basement',
-  description: 'the basement will lead you to the bathroom and the stairs.',
-  items: 'go through the door from the garage ',
-});
+    case 'basement':
+      console.log(
+        'You have entered the house now inside the basement, as you can see across the basement there is a doorway. You want to head towards there and there will be a door on your left and a staircase to your right, the door on you left will be the bathroom',
+      );
 
-let bathroom = new room({
-  name: 'bathroom',
-  description: 'where you wash up',
-  items: 'soap, washcloth, and dry towel',
-});
+    case 'bathroom':
+      console.log(
+        "Wash up from being at school all day so you don't spread germs all over the house, the soap, washcloth, and dry towel is right there for you.",
+      );
 
-let kitchen = new room({
-  name: 'kitchen',
-  description: 'where you get a snack',
-  items: 'ham, cheese, and bread',
-});
+    case 'kitchen':
+      console.log(
+        'now that you have washed up you want to get some food, when you exit the bathroom take the staircase up stairs to the kitchen. In side the refrigerator is the ham and cheese, and the bread is on top of the counter, make a sandwich and head to the bedroom.',
+      );
 
-let bedroom = new room({
-  name: 'bedroom',
-  description: 'where you relax',
-  items: 'gaming chair, desk, and chair',
-});
+    case 'bedroom':
+      console.log(
+        'when you leave the kitchen take a right and down the hall there are three doors two on the left and one on the right. your room is the last door on the left where your desk and gaming chair is, enjoy your sandwich and relax.',
+      );
+  }
+}
 
 let roomLocation = 'driveway';
 
