@@ -7,13 +7,9 @@ function ask(questionText) {
   });
 }
 
-start();
-
 async function start() {
-  const welcomeMessage = `182 Main St.
-You are standing on Main Street between Church and South Winooski.
-There is a door here. A keypad sits on the handle.
-On the door is a handwritten sign.`;
+  const welcomeMessage = `You just got off the bus from school, no one is home you have to get in the house by yourself
+  through the garage, wash up, eat a snack and go relax in your room.`;
   let answer = await ask(welcomeMessage);
   console.log('Now write your code to make this work!');
   process.exit();
@@ -21,67 +17,77 @@ On the door is a handwritten sign.`;
 
 class room {
   constructor(description, items, exit) {
-    (this.description = description), (this.items = items), (this.exit = exit);
+    (this.description = description),
+      (this.items = items),
+      (this.name = name),
+      (this.exit = exit);
   }
 }
 
-let room1 = new room({
-  name: 'room1'
-  description: '',
-  items: '',
-  exit: '',
+let driveway = new room({
+  name: 'driveway',
+  description: 'it is what leads to your garage to get inside yor house',
+  items: 'code, code pad, and garage',
 });
 
-let room2 = new room {
-  name: 'room2'
-  description: '',
-  items: '',
-  exit: '',
+let garage = new room({
+  name: 'garage',
+  description: 'get into the garage to go inside the basement',
+  items: 'door',
+});
+
+let basement = new room({
+  name: 'basement',
+  description: 'the basement will lead you to the bathroom and the stairs.',
+  items: 'go through the door from the garage ',
+});
+
+let bathroom = new room({
+  name: 'bathroom',
+  description: 'where you wash up',
+  items: 'soap, washcloth, and dry towel',
+});
+
+let kitchen = new room({
+  name: 'kitchen',
+  description: 'where you get a snack',
+  items: 'ham, cheese, and bread',
+});
+
+let bedroom = new room({
+  name: 'bedroom',
+  description: 'where you relax',
+  items: 'gaming chair, desk, and chair',
+});
+
+let roomLocation = 'driveway';
+
+roomLookUp = {
+  driveway: 'driveway',
+  garage: 'garage',
+  basement: 'basement',
+  bathroom: 'bathroom',
+  kitchen: 'kitchen',
+  bedroom: 'bedroom',
 };
 
-let room3 = new room ({
-  name: 'room3',
-  description: '',
-  items: '',
-  exit: ''
-});
-
-let room4 = new room ({
-  name: 'room4',
-  description: '',
-  items: '',
-  exit: '',
-});
-
-let room5 = new room ({
-  name: 'room5',
-  description: '',
-  items: ''
-  exit: '',
-});
-
-let room6 = new room ({
-  name: 'room6',
-  description: '',
-  items: '',
-  exit: '',
-});
-console.log(room);
-locationLookUp = {
-  room1: 'room1',
-  room2: 'room2',
-  room3: 'room3',
-  room4: 'room4',
-  room5: 'room5',
-  room6: 'room6',
+roomState = {
+  driveway: ['garage'],
+  garage: ['basement'],
+  basement: ['bathroom'],
+  bathroom: ['kitchen', 'bedroom'],
+  kitchen: ['bathroom', 'bedroom'],
+  bedroom: [],
 };
 
-locationState = {
-  room1: ['room2', 'room3'],
-  room2: ['room1', 'room3'],
-  room3: ['room2', 'room4'],
-  room4: ['room3', 'room5'],
-  room5: ['room4', 'room6'],
-  room6: ['room5', 'room1'],
-};
+function moveRoom(newRoom) {
+  if (roomState[currentRoom].includes(newRoom)) {
+    currentRoom = newRoom;
+    console.log(`You are now in the ${currentRoom}`);
+  } else {
+    console.log("You can't go there from here.");
+  }
+}
+
+start();
 
