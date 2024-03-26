@@ -6,15 +6,15 @@ function ask(questionText) {
     rl.question(questionText, resolve);
   });
 }
-
-async function start() {
+//OVERALL::: somewhere in your game should be a win condition (gathering some items, numbers, finding a door, or something else doesnt matter what) and if that cond't is met then tell the user they won
+async function start() { //make sure to call function at bottom of page
   const welcomeMessage = `You just got off the bus from school, no one is home you have to get in the house by yourself
-  through the garage, wash up, eat a snack and go relax in your room.`;
+  through the garage, wash up, eat a snack and go relax in your room.`;//make sure to include your commands somewhere in this intro so the user knows what they can do and maybe give them a question to answer or some sort of tutorial question
   let answer = await ask(welcomeMessage);
-  process.exit();
+  process.exit();//change this to call playerCommands(answer)
 
-  function playerCommands(command) {
-    switch (command) {
+  function playerCommands(command) {//sanitize input of command within function and change your cases accordingly
+    switch (command) {//after handling other comments go into your cases and have them do more than just a console.log, i.e move should call moveRoom(); console.log() should be used solely for user feedback so they know their action had an effect
       case 'enter':
         console.log('Enter the garage code in to the code pad.');
         break;
@@ -36,7 +36,7 @@ async function start() {
       default:
         console.log(`Sorry, I don't understand '${command}'`);
 
-        // Ask for the next move
+        // Ask for the next move <- instead of asking for the next move, we should re-read the currentRoom description and then call playerPrompt()
         ask('Enter the next move >\n').then((newInput) => {
           playerCommands(newInput.trim());
         });
@@ -44,23 +44,23 @@ async function start() {
     }
   }
 
-  async function start() {
+  async function start() {//change or remove this function to not be the same as the function below the showTextNode function and the roomState object
     const command = await ask('Enter a command: ');
     playerCommands(command.trim());
   }
 }
 
-class room {
+class room {//make sure to capitalize class names  <-- also is currently unused
   constructor(description, items, exit) {
     (this.description = description),
       (this.items = items),
       (this.name = name),
       (this.exit = exit);
   }
-}
+}// to use the class constructor do : let exampleRoom = new room(exampleDescription, exampleItems, exampleExits) <- is similar to room.exampleRoom={exampleDescription: "ex",etc}
 console.log(constructor);
 
-function roomDescription(currentRoom) {
+function roomDescription(currentRoom) {//in your descriptions, make sure to add the command name after its associated command (with a parentheses) for each potential action within that room
   switch (currentRoom) {
     case 'driveway':
       console.log(
@@ -96,9 +96,9 @@ function roomDescription(currentRoom) {
 
 // console.log(roomDescription);
 
-let currentRoom = 'driveway';
+let currentRoom = 'driveway';//make sure to instantiate this variable BEFORE any functions that require it (recommend, to put directly above roomDescription() AND moveRoom())
 
-roomLookUp = {
+roomLookUp = {//this need to be an instantiation (meaning let roomLookUp={some info})
   driveway: 'driveway',
   garage: 'garage',
   basement: 'basement',
@@ -107,7 +107,7 @@ roomLookUp = {
   bedroom: 'bedroom',
 };
 
-roomState = {
+roomState = {//this need to be an instantiation (meaning let roomState={some info})
   driveway: ['garage'],
   garage: ['basement'],
   basement: ['bathroom'],
@@ -118,13 +118,13 @@ roomState = {
 
 
 
-function showTextNode(){}
+function showTextNode(){}//currently does not serve a purpose, if a purpose is found then keep and leave a comment saying what purpose and where
 
 const textNode(){}
 
 
 
-function moveRoom(newRoom) {
+function moveRoom(newRoom) {//would recommend to add a call to roomDescription after a succesful move of rooms and a call to playerPrompt after an UNsuccessful move of rooms
   if (roomState[currentRoom].includes(newRoom)) {
     currentRoom = newRoom;
     console.log(`You are now in the ${currentRoom}`);
@@ -133,7 +133,7 @@ function moveRoom(newRoom) {
   }
 }
 
-async function start() {
+async function start() {//change function name to something like playerPrompt for clarity and to avoid errors
   const command = await ask('Enter a command: ');
   playerCommands(command.trim());
 }
