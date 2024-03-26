@@ -14,27 +14,42 @@ async function start() {
   process.exit();
 
   function playerCommands(command) {
-    switch (command) {
-      case 'enter':
-        console.log('');
-      case 'move':
-        console.log('');
-      case 'open':
-        console.log('');
-      case 'dropItem':
-        console.log('');
-      case 'grabItem':
-        console.log('');
-      case 'read':
-        console.log('');
-      default:
-        console.log(`sorry I don't understand ${command}`);
+  switch (command) {
+    case 'enter':
+      console.log('Enter the garage code in to the code pad.');
+      break;
+    case 'move':
+      console.log('Move to the next room.');
+      break;
+    case 'open':
+      console.log('Open the door to get in.');
+      break;
+    case 'grabItem':
+      console.log('Grab the ham, cheese and bread to make a sandwich.');
+      break;
+    case 'putItemAway':
+      console.log('Put away the ham and cheese.');
+      break;
+    case 'read':
+      console.log('Read the garage code that is printed under the rock.');
+      break;
+    default:
+      console.log(`Sorry, I don't understand '${command}'`);
 
-      // let newInput = prompt('Enter the next move >\n');
-      // playCommands(newInput);
-    }
+      // Ask for the next move
+      ask('Enter the next move >\n').then((newInput) => {
+        playerCommands(newInput.trim());
+      });
+      break;
   }
-}
+  }
+
+  async function start() {
+  const command = await ask('Enter a command: ');
+  playerCommands(command.trim());
+  }
+
+
 class room {
   constructor(description, items, exit) {
     (this.description = description),
@@ -79,6 +94,8 @@ function roomDescription(currentRoom) {
   }
 }
 
+console.log(roomDescription);
+
 let roomLocation = 'driveway';
 
 roomLookUp = {
@@ -108,5 +125,9 @@ function moveRoom(newRoom) {
   }
 }
 
-start();
+
+async function start() {
+  const command = await ask('Enter a command: ');
+  playerCommands(command.trim());
+}
 
