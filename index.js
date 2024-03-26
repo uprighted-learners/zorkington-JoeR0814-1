@@ -14,41 +14,41 @@ async function start() {
   process.exit();
 
   function playerCommands(command) {
-  switch (command) {
-    case 'enter':
-      console.log('Enter the garage code in to the code pad.');
-      break;
-    case 'move':
-      console.log('Move to the next room.');
-      break;
-    case 'open':
-      console.log('Open the door to get in.');
-      break;
-    case 'grabItem':
-      console.log('Grab the ham, cheese and bread to make a sandwich.');
-      break;
-    case 'putItemAway':
-      console.log('Put away the ham and cheese.');
-      break;
-    case 'read':
-      console.log('Read the garage code that is printed under the rock.');
-      break;
-    default:
-      console.log(`Sorry, I don't understand '${command}'`);
+    switch (command) {
+      case 'enter':
+        console.log('Enter the garage code in to the code pad.');
+        break;
+      case 'move':
+        console.log('Move to the next room.');
+        break;
+      case 'open':
+        console.log('Open the door to get in.');
+        break;
+      case 'grabItem':
+        console.log('Grab the ham, cheese and bread to make a sandwich.');
+        break;
+      case 'putItemAway':
+        console.log('Put away the ham and cheese.');
+        break;
+      case 'read':
+        console.log('Read the garage code that is printed under the rock.');
+        break;
+      default:
+        console.log(`Sorry, I don't understand '${command}'`);
 
-      // Ask for the next move
-      ask('Enter the next move >\n').then((newInput) => {
-        playerCommands(newInput.trim());
-      });
-      break;
-  }
+        // Ask for the next move
+        ask('Enter the next move >\n').then((newInput) => {
+          playerCommands(newInput.trim());
+        });
+        break;
+    }
   }
 
   async function start() {
-  const command = await ask('Enter a command: ');
-  playerCommands(command.trim());
+    const command = await ask('Enter a command: ');
+    playerCommands(command.trim());
   }
-
+}
 
 class room {
   constructor(description, items, exit) {
@@ -94,9 +94,9 @@ function roomDescription(currentRoom) {
   }
 }
 
-console.log(roomDescription);
+// console.log(roomDescription);
 
-let roomLocation = 'driveway';
+let currentRoom = 'driveway';
 
 roomLookUp = {
   driveway: 'driveway',
@@ -116,6 +116,14 @@ roomState = {
   bedroom: [],
 };
 
+
+
+function showTextNode(){}
+
+const textNode(){}
+
+
+
 function moveRoom(newRoom) {
   if (roomState[currentRoom].includes(newRoom)) {
     currentRoom = newRoom;
@@ -124,7 +132,6 @@ function moveRoom(newRoom) {
     console.log("You can't go there from here.");
   }
 }
-
 
 async function start() {
   const command = await ask('Enter a command: ');
