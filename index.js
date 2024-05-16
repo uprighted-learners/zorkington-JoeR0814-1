@@ -139,6 +139,38 @@ async function playerCommands(command) {
   }
 }
 
+// Function to check if an item is in the room
+function checkItem(item) {
+  if (rooms[currentRoom].inventory.includes(item)) {
+    console.log(`You see a ${item} in the room.`);
+  } else {
+    console.log(`There is no ${item} in the room.`);
+  }
+}
+//how player can check to see the inventory
+function checkInventory() {
+  if (playerInventory.length === 0) {
+    console.log('You have nothing in your inventory.');
+  } else {
+    console.log('You have the following items in your inventory:');
+    playerInventory.forEach((item) => {
+      console.log(`- ${item}`);
+    });
+  }
+}
+// Function to grab an item from the room
+function grabItem(item) {
+  if (rooms[currentRoom].inventory.includes(item)) {
+    playerInventory.push(item);
+    rooms[currentRoom].inventory = rooms[currentRoom].inventory.filter(
+      (i) => i !== item,
+    );
+    console.log(`You have taken the ${item}.`);
+  } else {
+    console.log(`There is no ${item} here.`);
+  }
+}
+
 function moveRoom(direction) {
   if (rooms[currentRoom].connection.includes(direction)) {
     currentRoom = direction;
