@@ -212,7 +212,7 @@ const rooms = {
 async function playerCommands(command) {
   switch (currentRoom) {
     case 'street':
-      if (command === 'walk up the driveway') {
+      if (command === 'walk up your driveway') {
         moveRoom('driveway');
       } else {
         console.log(
@@ -277,14 +277,14 @@ async function playerCommands(command) {
   }
 }
 
-function moveRoom(direction) {
-  if (rooms[currentRoom].connection.includes(direction)) {
-    currentRoom = direction;
-    console.log(rooms[currentRoom].description);
-  } else {
-    console.log("You can't go that way");
-  }
-}
+// function grabItem(item) {
+//   if (rooms[currentRoom].inventory.includes(item)) {
+//     playerInventory.push(item);
+//     console.log(`You picked up ${item}`);
+//   } else {
+//     console.log(`There is no ${item} in this room`);
+//   }
+// }
 
 startGame();
 

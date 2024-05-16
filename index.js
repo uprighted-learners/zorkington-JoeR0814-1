@@ -1,4 +1,4 @@
-/const readline = require('readline');
+const readline = require('readline');
 const rl = readline.createInterface(process.stdin, process.stdout);
 
 function ask(questionText) {
@@ -27,6 +27,12 @@ let doorLocked = false;
 
 // this is the roomState object
 const rooms = {
+  street: {
+    description:
+      'You are off the bus and on the street. You have to (walk to the driveway) to get to the house.',
+    connection: ['driveway'],
+    inventory: [],
+  },
   driveway: {
     description:
       'your at the top of the driveway and in front of the garage, (lift the garage open) to get inside of the garage from there you need to get inside the basement of the house.',
