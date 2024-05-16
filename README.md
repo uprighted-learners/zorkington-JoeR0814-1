@@ -224,13 +224,13 @@ Bzzzzt! The door is still locked.
 **Then** the game displays a description, with at least one (takeable) item in said description
 
 ```txt
-You are in a foyer. Or maybe it's an antechamber. 
-Or a vestibule. 
-Or an entryway. 
-Or an atrium. 
-Or a narthex. 
+You are in a foyer. Or maybe it's an antechamber.
+Or a vestibule.
+Or an entryway.
+Or an atrium.
+Or a narthex.
 But let's forget all that fancy vocabulary, and just call it a foyer.
-Anyways, it's definitely not a mudroom. 
+Anyways, it's definitely not a mudroom.
 A copy of the local paper lies in a corner.
 ```
 
@@ -250,7 +250,7 @@ A copy of the local paper lies in a corner.
 
 ```txt
 >_take paper
-You pick up the paper and leaf through it looking for comics 
+You pick up the paper and leaf through it looking for comics
 and ignoring the articles, just like everybody else does.
 ```
 
