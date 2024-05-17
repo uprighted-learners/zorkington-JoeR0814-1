@@ -59,7 +59,7 @@ const rooms = {
   },
   kitchen: {
     description:
-      'You are in the kitchen. Make a sandwich that you like and head to your bedroom to (relax).',
+      'You are in the kitchen. Make a (ham, cheese, on bread, sandwich and place it on a plate) that you like and head to your bedroom to (relax).',
     connection: ['bathroom', 'bedroom'],
     inventory: ['ham', 'cheese', 'bread', 'plate'],
   },
@@ -72,6 +72,7 @@ const rooms = {
 
 // Handle player commands based on the current room
 async function playerCommands(command) {
+  const [action, item] = command.split(' ');
   switch (currentRoom) {
     case 'street':
       if (command === 'walk up the driveway') {
@@ -94,7 +95,7 @@ async function playerCommands(command) {
     case 'garage':
       if (command === 'open basement door') {
         moveRoom('basement');
-      } else if (command === 'open door to the backyard') {
+      } else if (command === 'open backyard door') {
         console.log("You can't go to the backyard right now.");
       } else {
         console.log(
@@ -114,6 +115,12 @@ async function playerCommands(command) {
     case 'bathroom':
       if (command === 'make a snack') {
         moveRoom('kitchen');
+      } else if (action === 'grab') {
+        grabItem(item);
+      } else if (action === 'drop') {
+        dropItem(item);
+      } else if (action === 'use') {
+        useItem(item);
       } else {
         console.log(
           "You can't do that here. Try 'make a snack' to go to the kitchen.",
@@ -123,6 +130,12 @@ async function playerCommands(command) {
     case 'kitchen':
       if (command === 'relax') {
         moveRoom('bedroom');
+      } else if (action === 'grab') {
+        grabItem(item);
+      } else if (action === 'drop') {
+        dropItem(item);
+      } else if (action === 'use') {
+        useItem(item);
       } else {
         console.log(
           "You can't do that here. Try 'relax' to go to your bedroom.",
@@ -139,25 +152,6 @@ async function playerCommands(command) {
   }
 }
 
-// Function to check if an item is in the room
-function checkItem(item) {
-  if (rooms[currentRoom].inventory.includes(item)) {
-    console.log(`You see a ${item} in the room.`);
-  } else {
-    console.log(`There is no ${item} in the room.`);
-  }
-}
-//how player can check to see the inventory
-function checkInventory() {
-  if (playerInventory.length === 0) {
-    console.log('You have nothing in your inventory.');
-  } else {
-    console.log('You have the following items in your inventory:');
-    playerInventory.forEach((item) => {
-      console.log(`- ${item}`);
-    });
-  }
-}
 // Function to grab an item from the room
 function grabItem(item) {
   if (rooms[currentRoom].inventory.includes(item)) {
@@ -171,6 +165,37 @@ function grabItem(item) {
   }
 }
 
+// Function to drop an item into the room
+function dropItem(item) {
+  if (playerInventory.includes(item)) {
+    rooms[currentRoom].inventory.push(item);
+    playerInventory = playerInventory.filter((i) => i !== item);
+    console.log(`You have dropped the ${item}.`);
+  } else {
+    console.log(`You don't have a ${item}.`);
+  }
+}
+
+// Function to use an item
+function useItem(item) {
+  if (playerInventory.includes(item)) {
+    if (currentRoom === 'bathroom' && item === 'soap') {
+      console.log('You use the soap to wash your hands.');
+      playerInventory = playerInventory.filter((i) => i !== item);
+      rooms[currentRoom].inventory.push(item);
+    } else if (currentRoom === 'kitchen' && item === 'ham') {
+      console.log('You use the ham to make a sandwich.');
+      playerInventory = playerInventory.filter((i) => i !== item);
+      rooms[currentRoom].inventory.push(item);
+    } else {
+      console.log(`You can't use the ${item} here.`);
+    }
+  } else {
+    console.log(`You don't have a ${item}.`);
+  }
+}
+
+// Function to move between rooms
 function moveRoom(direction) {
   if (rooms[currentRoom].connection.includes(direction)) {
     currentRoom = direction;
