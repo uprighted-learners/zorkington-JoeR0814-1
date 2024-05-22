@@ -1,13 +1,14 @@
 const readline = require('readline');
 const rl = readline.createInterface(process.stdin, process.stdout);
 
+// this is a function that returns a promise that resolves to the user's input when the user types something in the console and presses enter key
 function ask(questionText) {
   return new Promise((resolve, reject) => {
     rl.question(questionText, resolve);
   });
 }
 
-// an async function to start the game
+// an async function to start the game and prompt the user with the welcome message and the first question to start the game and then wait for the user's input
 async function startGame() {
   const welcomeMessage =
     'Welcome home, you just got off the school bus and your parents are not home. From the street, you have to walk up the driveway to the garage to get in the house. Your mom left the garage unlocked for you to get in. You have to just lift the garage then get in through the basement door, use the bathroom, eat a snack, and go relax in your bedroom.';
@@ -15,17 +16,21 @@ async function startGame() {
   console.log(
     'when you get off the bus what do you have to do to get from the bus stop to the house?',
   );
+  // wait for the user's input and then call the playerCommands function to handle the user's input and then wait for the user's input again and keep the game running in a loop until the game ends
   while (true) {
     let answer = await ask('>_ ');
     await playerCommands(answer.trim().toLowerCase());
   }
 }
 
+// this is the global variables for the game
 let currentRoom = 'street';
+// this is the player inventory array to hold the items that the player picks up in the game
 let playerInventory = [];
+// this is the doorLocked variable to keep track of the door status in the game, there are no doors locked in the game so the default value is false
 let doorLocked = false;
 
-// this is the roomState object
+// this is the roomState object that holds the rooms in the game with their description, connections, and inventory items
 const rooms = {
   street: {
     description:
@@ -70,7 +75,7 @@ const rooms = {
   },
 };
 
-// Handle player commands based on the current room
+// Handle player commands based on the current room the player is in and the command the player enters in the console to interact with the game world and the items in the game world and the player inventory items and the room connections to move between rooms  in the game world and the game logic to win the game and the game logic to lose the game and the game logic to end the game and the game logic to keep the game running in a loop until the game ends
 async function playerCommands(command) {
   const [action, item] = command.split(' ');
   switch (currentRoom) {
@@ -113,14 +118,16 @@ async function playerCommands(command) {
       }
       break;
     case 'bathroom':
+      // if the player uses the soap in the bathroom
       if (command === 'make a snack') {
         moveRoom('kitchen');
+        // these are the commands to use to grab the bathroom items
       } else if (action === 'grab') {
         grabItem(item);
+        // these are the commands to use to drop the bathroom items
       } else if (action === 'drop') {
         dropItem(item);
-      } else if (action === 'use') {
-        useItem(item);
+        // these are the commands to use to use the bathroom items
       } else {
         console.log(
           "You can't do that here. Try 'make a snack' to go to the kitchen.",
@@ -128,31 +135,36 @@ async function playerCommands(command) {
       }
       break;
     case 'kitchen':
+      // if the player uses the ham, cheese, and bread to make a sandwich in the kitchen and then goes to the bedroom to relax
       if (command === 'relax') {
         moveRoom('bedroom');
+        // these are the commands to use to grab the kitchen items
       } else if (action === 'grab') {
         grabItem(item);
+        // these are the commands to use to drop the kitchen items
       } else if (action === 'drop') {
         dropItem(item);
-      } else if (action === 'use') {
-        useItem(item);
+        // these are the commands to use to make a sandwich in the kitchen
       } else {
         console.log(
           "You can't do that here. Try 'relax' to go to your bedroom.",
         );
       }
       break;
+    // if the player is in the bedroom and types relax the game ends
     case 'bedroom':
       console.log(
         "You're already in your bedroom. You can relax here. Game over!",
       );
+      // end the game
       break;
     default:
       console.log('I do not understand that command');
+      rl.close();
   }
 }
 
-// Function to grab an item from the room
+// Function to grab an item from the room and add it to the player inventory and remove it from the room inventory items
 function grabItem(item) {
   if (rooms[currentRoom].inventory.includes(item)) {
     playerInventory.push(item);
@@ -165,7 +177,7 @@ function grabItem(item) {
   }
 }
 
-// Function to drop an item into the room
+// Function to drop an item into the room and remove it from the player inventory and add it to the room inventory items
 function dropItem(item) {
   if (playerInventory.includes(item)) {
     rooms[currentRoom].inventory.push(item);
@@ -176,13 +188,15 @@ function dropItem(item) {
   }
 }
 
-// Function to use an item
+// the useItem function to use the item in the room and the game logic to use the item in the room
 function useItem(item) {
+  // if the player has the item in the player inventory and the player is in the bathroom and the item is soap then the player uses the soap to wash their hands
   if (playerInventory.includes(item)) {
     if (currentRoom === 'bathroom' && item === 'soap') {
       console.log('You use the soap to wash your hands.');
       playerInventory = playerInventory.filter((i) => i !== item);
       rooms[currentRoom].inventory.push(item);
+      // these go to the kitchen to make a snack
     } else if (currentRoom === 'kitchen' && item === 'ham') {
       console.log('You use the ham to make a sandwich.');
       playerInventory = playerInventory.filter((i) => i !== item);
@@ -195,7 +209,7 @@ function useItem(item) {
   }
 }
 
-// Function to move between rooms
+// Function to move between rooms in the game world based on the room connections in the game
 function moveRoom(direction) {
   if (rooms[currentRoom].connection.includes(direction)) {
     currentRoom = direction;
