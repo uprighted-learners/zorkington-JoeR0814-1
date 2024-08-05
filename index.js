@@ -13,7 +13,7 @@ async function startGame() {
     'Welcome home, you just got off the school bus and your parents are not home. From the street, you have to walk up the driveway to the garage to get in the house. Your mom left the garage unlocked for you to get in. You have to just lift the garage then get in through the basement door, use the bathroom, eat a snack, and go relax in your bedroom.';
   console.log(welcomeMessage);
   console.log(
-    'When you get off the bus, what do you have to do to get from the bus stop to the house?',
+    'When you get off the bus, you have to do what to get in the house?',
   );
 
   // wait for the user's input and then call the playerCommands function to handle the user's input and then wait for the user's input again and keep the game running in a loop until the game ends
